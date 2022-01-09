@@ -27,6 +27,23 @@ generateEL.addEventListener('click', () => {
   resultEL.innerText = generatePassword(hasLower, hasUpper, hasNumber, hasSymbol, length);
 });
 
+//password to clipboard
+clipboardEL.addEventListener('click', () => {
+  const textarea = document.createElement('textarea');
+  const password = resultEL.innerText;
+
+  if(!password) {
+    return;
+  }
+
+  textarea.value = password;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  textarea.remove();
+  alert('Password has been copied to clipboard!')
+})
+
 //Generate R.A.P
 function generatePassword(lower, upper, number, symbol, length) {
   //1. Init pw var
@@ -49,10 +66,12 @@ function generatePassword(lower, upper, number, symbol, length) {
       console.log('funcName: ', funcName);
 
       generatedPassword += randomFunc[funcName]();
-
-
-    })
+      });
   }
+
+  const finalPassword = generatedPassword.slice(0, length);
+
+  return finalPassword;
 }
 
 // Generator Functions
